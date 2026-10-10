@@ -1,3 +1,3 @@
-export { registerUser } from './register.controller.js';
-export { loginUser } from './login.controller.js';
-export { logoutUser } from './logout.controller.js';
+export { registerUser } from './registerUser.controller.js';
+export { loginUser } from './loginUser.controller.js';
+export {logoutUser} from './logoutUser.controller.js';

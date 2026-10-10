@@ -1,11 +1,10 @@
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import userRouter from './routes/user.routes.js';
-import { ApiError } from './utils/ApiError.js';
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
+// 1. Core Global Middlewares Configuration
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
@@ -13,37 +12,30 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: '16kb' }));
-app.use(express.urlencoded({ extended: true, limit: '16kb' }));
-app.use(express.static('public'));
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
 app.use(cookieParser());
 
-app.use('/api/v1/users', userRouter);
+// 2. Modular Router Imports
+import userRouter from "./routes/user.route.js";
 
+// 3. API Routes Declaration (RESTful Versioning)
+app.use("/api/v1/users", userRouter);
+
+// 4. Global Error Handling Middleware (The Bodyguard)
 app.use((err, req, res, next) => {
-  if (err instanceof ApiError) {
-    return res.status(err.statusCode).json({
-      statusCode: err.statusCode,
-      success: err.success,
-      message: err.message,
-      errors: err.errors,
-      data: err.data,
-      ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
-    });
-  }
-
+  // Check if error is an instance of our custom ApiError class
   const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || "Internal Server Error";
+  const errors = err.errors || [];
 
   return res.status(statusCode).json({
     statusCode,
     success: false,
     message,
-    errors: [],
-    data: null,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    errors,
   });
 });
 
 export { app };
-export default app;
