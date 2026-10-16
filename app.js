@@ -20,6 +20,9 @@ app.use(cookieParser());
 // 2. Modular Router Imports
 import userRouter from "./routes/user.route.js";
 
+import { toggleFollowUser } from "./controllers/followerapi.controller.js";
+
+app.use("/toggle/user/:userId",toggleFollowUser);
 // 3. API Routes Declaration (RESTful Versioning)
 app.use("/api/v1/users", userRouter);
 

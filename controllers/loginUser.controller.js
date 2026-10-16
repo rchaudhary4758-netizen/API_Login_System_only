@@ -32,13 +32,13 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ $or: queryConditions }).select('+password');
 
   if (!user) {
-    throw new ApiError(401, 'Invalid credentials');
+    throw new ApiError(401, 'Invalid usser');
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new ApiError(401, 'Invalid credentials');
+    throw new ApiError(401, 'invalid password');
   }
 
   const accessToken = jwt.sign(
@@ -47,7 +47,7 @@ const loginUser = asyncHandler(async (req, res) => {
       username: user.username,
       email: user.email,
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.JWT_SECRET,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '1d',
     }
