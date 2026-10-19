@@ -49,7 +49,7 @@ const loginUser = asyncHandler(async (req, res) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '1d',
+      expiresIn: process.env.JWT_SECRET || '1d',
     }
   );
 

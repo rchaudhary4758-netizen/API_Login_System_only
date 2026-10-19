@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import userRouter from "./routes/user.route.js";
+import { followrouter } from "./routes/followerapi.route.js";
 
 const app = express();
 
@@ -18,13 +20,14 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // 2. Modular Router Imports
-import userRouter from "./routes/user.route.js";
 
-import { toggleFollowUser } from "./controllers/followerapi.controller.js";
 
-app.use("/toggle/user/:userId",toggleFollowUser);
+
+
 // 3. API Routes Declaration (RESTful Versioning)
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", followrouter);
+
 
 // 4. Global Error Handling Middleware (The Bodyguard)
 app.use((err, req, res, next) => {

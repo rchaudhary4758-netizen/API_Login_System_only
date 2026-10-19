@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { toggleFollowUser } from "../controllers/followerapi.controller.js";
-import { verifyJwt } from "../middlewares/Auth.middleware.js";
+import { FollowUser } from "../controllers/followerapi.controller.js";
+// import { verifyJwt } from "../middlewares/Auth.middleware.js";
 
-const router = Router();
+const followrouter = Router();
 
-router.use(verifyJwt);
+followrouter.route('/FollowUser').post(FollowUser);
 
-router.route("/toggle/user/:userId").post(verifyJwt,toggleFollowUser);
 
-export default router;
+export {followrouter};

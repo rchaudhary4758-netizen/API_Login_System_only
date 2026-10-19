@@ -4,7 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-export const toggleFollowUser = asyncHandler(async (req, res) => {
+export const FollowUser = asyncHandler(async (req, res) => {
     const { userId } = req.params;
     const followerId = req.user._id;
 
