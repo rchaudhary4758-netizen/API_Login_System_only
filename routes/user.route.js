@@ -9,6 +9,5 @@ userRouter.route('/login').post(loginUser);
 
 userRouter.route('/logout').post(verifyJWT, logoutUser);
 
-userRouter.route('/FollowUser').post(FollowUser);
 export { userRouter };
 export default userRouter;
