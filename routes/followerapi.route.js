@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { FollowUser } from "../controllers/followerapi.controller.js";
-// import { verifyJwt } from "../middlewares/Auth.middleware.js";
 
 const followrouter = Router();
 
